@@ -27,7 +27,7 @@ let Doc = React.createClass({
     let doc = this.props.doc
     return  <div>
       <div key={doc._id}><Button bsStyle="link" onClick={this.toggleExpand}>{doc._id} </Button>
-        <EditDoc doc={doc} applyEditDoc={this.props.applyEditDoc} index={this.props.index}/>
+        <EditDoc doc={doc} applyEditDoc={this.props.applyEditDoc} deleteDoc={this.props.deleteDoc} index={this.props.index}/>
         <CopyToClipboard text={JSON.stringify(doc, null, 2)} onCopy={()=>{
           this.setState({copied: true}), setTimeout(()=>{this.setState({copied: false})}, 400)}
         }>

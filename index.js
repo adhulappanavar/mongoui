@@ -9,7 +9,10 @@ let expressHandlebars = require('express-handlebars')
 let errorHandler = require('errorhandler')
 let cors = require('cors')
 
-let config = require('./config.json')
+let mongoDb = require('mongodb')
+
+// let config = require('./config.json')
+let config = require('./config_default.json')
 let mongoskin = require('mongoskin')
 
 let dbHostName, dbPortNumber, dbName
@@ -84,6 +87,14 @@ app.patch('/api/dbs/:dbName/collections/:collectionName/:id', function(req, res)
   delete req.body._id
   collection.updateById(req.params.id, {$set: req.body}, function(e, results) {
     console.log('boo', e, results)
+    res.json(results)
+  })
+})
+
+app.delete('/api/dbs/:dbName/collections/:collectionName/:id', function(req, res) {
+  if (req.body._id && req.body._id != req.params.id) return res.status(400).json({error: 'ID in the body is not matching ID in the URL'})
+  delete req.body._id
+  req.collection.remove({ _id: mongoDb.ObjectId(req.params.id)}, function(e, results) {
     res.json(results)
   })
 })
