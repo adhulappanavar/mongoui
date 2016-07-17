@@ -11,7 +11,8 @@ let cors = require('cors')
 
 let mongoDb = require('mongodb')
 
-let config = require('./config.json')
+// let config = require('./config.json')
+let config = require('./config_default.json')
 let mongoskin = require('mongoskin')
 
 let dbHostName, dbPortNumber, dbName
