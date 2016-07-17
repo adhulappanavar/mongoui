@@ -70,6 +70,26 @@ let Docs = React.createClass({
         callback('Error updating')
     })
   },
+
+  deleteDoc(doc, index, callback){
+    console.log("got to deleteDoc within docs.jsx")
+    request({
+      method: 'DELETE',
+      url: `${baseUrl}/api/dbs/${this.props.params.dbName}/collections/${this.props.params.collectionName}/${doc._id}`,
+      json: doc,
+      withCredentials: false},
+      (error, response, body) =>{
+        if  (body.ok === 1){ //(body.ok = 1)
+          let docs = this.state.docs;
+          docs.splice(index, 1);
+          this.setState({docs: docs});
+          //
+          console.log("Delete request successful");
+          return callback('Document Deleted');
+        }
+        callback('Error Deleting updating')
+    })
+  },
   render() {
     // console.log(this.state, this.props.params)
     return <div>
